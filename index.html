@@ -32,6 +32,7 @@
   color-scheme:light;
 }
 *,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
 html{background:var(--bg);scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--text);font:400 16.5px/1.7 var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
@@ -1331,8 +1332,8 @@ function drawSummary(){const p=payload(),rows=[["Services",p.services],["Industr
 $("#prevBtn").addEventListener("click",()=>show(cur-1));
 $("#nextBtn").addEventListener("click",async()=>{if(!validate(cur))return;if(cur<TOTAL)return show(cur+1);if(form._honey.value)return;
   const btn=$("#nextBtn");btn.disabled=true;btn.textContent="Sending…";const p=payload();
-  try{const r=await fetch(FORM_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({...p,_subject:`New project request — ${p.name} (${p.budget})`,_template:"table",_captcha:"false",_replyto:p.email})});
-    if(!r.ok)throw new Error(r.status);finish(true)}catch(e){finish(false,p)}});
+  try{const r=await fetch(FORM_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({...p,_subject:`New lead: ${p.name} — ${p.budget} · ${new Date().toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})}`,_template:"table",_captcha:"false",_replyto:p.email})});
+    const j=await r.json().catch(()=>({}));if(!r.ok||String(j.success)!=="true")throw new Error(j.message||r.status);finish(true)}catch(e){finish(false,p)}});
 function finish(ok,p){$$(".fstep",form).forEach(s=>s.classList.remove("active"));$("#fnav").hidden=true;$(".progress",form).hidden=true;
   if(!ok){const body=encodeURIComponent(Object.entries(p).map(([k,v])=>`${k}: ${v}`).join("\n"));
     $("#done h3").textContent="Last step: hit send.";
