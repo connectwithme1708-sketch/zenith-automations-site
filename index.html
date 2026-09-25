@@ -887,7 +887,7 @@ footer{background:var(--navy);color:#C9D3EA;padding-block:60px 40px;margin-top:4
 <script>
 /* ========== SETTINGS ========== */
 const LEAD_EMAIL = "anna@zenith-automations.com";
-const FORM_ENDPOINT = "https://formsubmit.co/ajax/e4d0afce2e66667c004cf7a148fbe752"; // FormSubmit key is registered to connectwithme1708@gmail.com (anna@ forwards there) // or a GHL / Zapier / n8n webhook URL
+const FORM_ENDPOINT = "https://script.google.com/macros/s/AKfycbzGYntbs3dQyp0A5Fq1_kBw83bHN_SmN8GtQc2VZ-NUsKIlVCPxREPheTmg1DBmr-wjAg/exec"; // Google Apps Script -> logs to the Leads sheet + emails you
 /* ============================== */
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1377,7 +1377,7 @@ function drawSummary(){const p=payload(),rows=[["Services",p.services],["Industr
 $("#prevBtn").addEventListener("click",()=>show(cur-1));
 $("#nextBtn").addEventListener("click",async()=>{if(!validate(cur))return;if(cur<TOTAL)return show(cur+1);if(form._honey.value)return;
   const btn=$("#nextBtn");btn.disabled=true;btn.textContent="Sending…";const p=payload();
-  try{const r=await fetch(FORM_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({...p,_subject:`New lead: ${p.name} — ${p.budget} · ${new Date().toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})}`,_template:"table",_captcha:"false",_replyto:p.email})});
+  try{const r=await fetch(FORM_ENDPOINT,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(p)});
     const j=await r.json().catch(()=>({}));if(!r.ok||String(j.success)!=="true")throw new Error(j.message||r.status);finish(true)}catch(e){finish(false,p)}});
 function finish(ok,p){$$(".fstep",form).forEach(s=>s.classList.remove("active"));$("#fnav").hidden=true;$(".progress",form).hidden=true;
   if(!ok){const body=encodeURIComponent(Object.entries(p).map(([k,v])=>`${k}: ${v}`).join("\n"));
