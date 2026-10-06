@@ -32,6 +32,7 @@
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html { background: var(--night); }
 body { margin: 0; background: var(--night); color: var(--ink); font: 300 16px/1.6 var(--body); -webkit-font-smoothing: antialiased; }
 body.locked { overflow: hidden; }
@@ -717,12 +718,20 @@ $("#nextBtn").onclick = async () => {
   if (form._honey.value) return;
   const btn = $("#nextBtn"), p = payload();
   btn.disabled = true; btn.textContent = "Sending…";
+  // The lead handler saves to the sheet and emails before it replies. Some browsers (several Google
+  // accounts signed in, privacy extensions) can't read that reply even though the lead arrived, so only
+  // a clear "success: false" from the handler, or no connection at all, counts as a failed send.
+  let r = null;
   try {
-    const r = await fetch(FORM_ENDPOINT, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(p) });
-    const j = await r.json().catch(() => ({}));
-    if (!r.ok || String(j.success) !== "true") throw new Error(j.message || r.status);
-    finish(true);
-  } catch (e) { finish(false, p); }
+    r = await fetch(FORM_ENDPOINT, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(p) });
+  } catch (e) {
+    // the request left the browser; resending would create a duplicate lead
+    return finish(navigator.onLine !== false, p);
+  }
+  const j = await r.json().catch(() => null);
+  if (j && String(j.success) === "false") return finish(false, p);
+  if (!j && r.status >= 500) return finish(false, p);
+  finish(true);
 };
 function finish(ok, p) {
   $$(".fstep", form).forEach(s => s.classList.remove("active"));
