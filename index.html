@@ -47,6 +47,25 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .base { position: fixed; inset: 0; pointer-events: none; background: radial-gradient(120% 70% at 50% 120%, rgba(22, 199, 154, .1), transparent 60%), linear-gradient(180deg, #040814 0%, #07112a 100%); }
 canvas#cloud { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 .vignette { position: fixed; inset: 0; pointer-events: none; background: radial-gradient(130% 90% at 50% 40%, transparent 55%, rgba(2, 5, 12, .7) 100%); }
+.feed { position: fixed; z-index: 3; transform: translateX(-50%); display: flex; align-items: center; gap: 14px; min-width: 290px; padding: 13px 18px; border-radius: 14px; border: 1px solid var(--hair); background: rgba(5, 10, 23, .55); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); pointer-events: none; opacity: 0; transition: opacity .5s; }
+.feed .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--aqua); box-shadow: 0 0 0 0 rgba(126, 232, 210, .6); animation: ring 1.8s infinite; flex: none; }
+@keyframes ring { 70% { box-shadow: 0 0 0 10px rgba(126, 232, 210, 0); } 100% { box-shadow: 0 0 0 0 rgba(126, 232, 210, 0); } }
+.feed-body { display: grid; gap: 3px; min-width: 0; flex: 1; transition: opacity .35s, transform .35s; }
+.feed-body.swap { opacity: 0; transform: translateY(8px); }
+.feed-body b { font: 500 .88rem/1.2 var(--sans); }
+.feed-body span { font-size: .78rem; color: var(--ink-soft); }
+.feed small { font: 500 .58rem/1 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--aqua); align-self: flex-start; padding-top: 3px; }
+.hint { position: absolute; left: 50%; bottom: 20px; transform: translateX(-50%); display: grid; justify-items: center; gap: 10px; font: 500 .6rem/1 var(--sans); letter-spacing: .3em; text-transform: uppercase; color: var(--ink-faint); background: none; border: 0; cursor: pointer; padding: 6px; }
+.hint i { width: 1px; height: 34px; background: linear-gradient(var(--aqua), transparent); transform-origin: top; animation: drip 2s ease-in-out infinite; }
+@keyframes drip { 0% { transform: scaleY(0); opacity: 1; } 60% { transform: scaleY(1); opacity: 1; } 100% { transform: scaleY(1); opacity: 0; } }
+.cursor, .cursor-dot { display: none; }
+@media (pointer: fine) {
+  .cursor { display: block; position: fixed; z-index: 60; left: 0; top: 0; width: 34px; height: 34px; margin: -17px 0 0 -17px; border-radius: 50%; border: 1px solid rgba(126, 232, 210, .55); pointer-events: none; transition: width .3s, height .3s, margin .3s, background .3s, border-color .3s, opacity .3s; opacity: 0; }
+  .cursor.on { opacity: 1; }
+  .cursor.hot { width: 64px; height: 64px; margin: -32px 0 0 -32px; background: rgba(126, 232, 210, .08); border-color: rgba(126, 232, 210, .9); }
+  .cursor-dot { display: block; position: fixed; z-index: 61; left: 0; top: 0; width: 4px; height: 4px; margin: -2px 0 0 -2px; border-radius: 50%; background: var(--aqua); pointer-events: none; }
+}
+.mag { transition: transform .35s cubic-bezier(.2, .8, .2, 1), background .35s, color .35s, border-color .35s; }
 .fig { position: fixed; z-index: 3; pointer-events: none; transform: translateX(-50%); font: 400 .72rem/1 var(--sans); letter-spacing: .22em; text-transform: uppercase; color: var(--ink-faint); white-space: nowrap; transition: opacity .5s; display: flex; gap: 10px; align-items: center; }
 .fig i { font: italic 400 1rem/1 var(--serif); letter-spacing: 0; text-transform: none; color: var(--aqua); }
 
@@ -230,7 +249,7 @@ input[type="range"] { width: 100%; accent-color: var(--aqua); }
   .logo svg { width: 50px; height: 32px; }
   .wm b { font-size: 1.08rem; }
   .wm small { font-size: .46rem; letter-spacing: .36em; }
-  .fig { display: none; }
+  .fig, .feed, .hint { display: none; }
   .menu ol { grid-template-columns: minmax(0, 1fr); }
   .giant span { font-size: 26vw; }
 }
@@ -251,6 +270,8 @@ input[type="range"] { width: 100%; accent-color: var(--aqua); }
 <div id="glows"></div>
 <canvas id="cloud" aria-hidden="true"></canvas>
 <div class="vignette"></div>
+<div class="feed" id="feed" aria-hidden="true"><span class="pulse"></span><div class="feed-body" id="feed-body"><b id="feed-t">New lead captured</b><span id="feed-s">Facebook ad · Med spa</span></div><small>Live</small></div>
+<div class="cursor" id="cursor" aria-hidden="true"></div><div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
 <div class="fig" id="fig" aria-hidden="true"><span id="fig-n">fig. 01</span><i id="fig-t">the zenith mark</i></div>
 <div class="progress" id="progress"></div>
 
@@ -287,7 +308,7 @@ input[type="range"] { width: 100%; accent-color: var(--aqua); }
       <ul class="inline"><li>For businesses &amp; agencies</li><li>10+ industries</li><li>Reply within 1 business day</li></ul>
       <div class="acts"><button class="btn solid" data-form>Start a project <span class="arr">→</span></button><button class="link" data-more="0">Done for you <span class="arr">→</span></button></div>
     </div>
-  </div></div></section>
+  </div><button class="hint" id="hint" aria-label="Next section">scroll<i></i></button></div></section>
 
   <section class="scene" id="ai-agents" data-i="1"><div class="stage"><div class="content">
     <div>
@@ -633,9 +654,92 @@ function onScroll() {
 }
 addEventListener("scroll", onScroll, { passive: true });
 addEventListener("resize", onScroll);
-const go = i => { i = clamp(i, 0, scenes.length - 1); scrollTo({ top: scenes[i].offsetTop + (i ? 2 : 0), behavior: reduce ? "auto" : "smooth" }); };
-up.onclick = () => go(active - 1);
-down.onclick = () => go(active + 1);
+/* one wheel flick, swipe or key press glides to the next stop; the zoom plays during the glide */
+const stops = () => { const a = scenes.map((s, i) => s.offsetTop + (i ? 2 : 0)); a.push(document.documentElement.scrollHeight - innerHeight); return a; };
+let gliding = false, lockUntil = 0, lastWheel = 0;
+function glideTo(y) {
+  const y0 = scrollY, d = y - y0;
+  if (Math.abs(d) < 2) return;
+  if (reduce) { scrollTo(0, y); return; }
+  gliding = true;
+  const dur = clamp(Math.abs(d) / innerHeight * 560, 750, 1500), t0 = performance.now();
+  const step = now => {
+    const t = clamp((now - t0) / dur), e = t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    scrollTo(0, y0 + d * e);
+    if (t < 1) requestAnimationFrame(step); else { gliding = false; lockUntil = performance.now() + 350; }
+  };
+  requestAnimationFrame(step);
+}
+function stepDir(dir) {
+  const s = stops(), y = scrollY;
+  const t = dir > 0 ? s.find(v => v > y + 8) : [...s].reverse().find(v => v < y - 8);
+  if (t !== undefined) glideTo(t);
+}
+const go = i => glideTo(stops()[clamp(i, 0, scenes.length - 1)]);
+up.onclick = () => stepDir(-1);
+down.onclick = () => stepDir(1);
+$("#hint").onclick = () => stepDir(1);
+const freeScroll = () => document.body.classList.contains("locked");
+addEventListener("wheel", e => {
+  if (freeScroll() || e.ctrlKey) return;
+  e.preventDefault();
+  const now = performance.now(), gap = now - lastWheel; lastWheel = now;
+  if (gliding) return;
+  if (now < lockUntil && gap < 200) { lockUntil = now + 200; return; } // swallow trackpad momentum
+  if (Math.abs(e.deltaY) < 3) return;
+  stepDir(Math.sign(e.deltaY));
+}, { passive: false });
+let touchY = null;
+addEventListener("touchstart", e => { touchY = freeScroll() ? null : e.touches[0].clientY; }, { passive: true });
+addEventListener("touchmove", e => { if (touchY !== null) e.preventDefault(); }, { passive: false });
+addEventListener("touchend", e => {
+  if (touchY === null) return;
+  const dy = touchY - e.changedTouches[0].clientY; touchY = null;
+  if (Math.abs(dy) > 35 && !gliding) stepDir(Math.sign(dy));
+});
+addEventListener("keydown", e => {
+  if (freeScroll() || /^(INPUT|TEXTAREA|SELECT|BUTTON)$/.test(document.activeElement?.tagName) && e.key === " ") return;
+  if (["ArrowDown", "PageDown", " "].includes(e.key)) { e.preventDefault(); if (!gliding) stepDir(1); }
+  else if (["ArrowUp", "PageUp"].includes(e.key)) { e.preventDefault(); if (!gliding) stepDir(-1); }
+  else if (e.key === "Home") { e.preventDefault(); go(0); }
+  else if (e.key === "End") { e.preventDefault(); glideTo(stops().at(-1)); }
+});
+
+/* magnetic buttons */
+$$(".btn, .burger, .rail button, .link").forEach(el => {
+  el.classList.add("mag");
+  el.addEventListener("pointermove", e => {
+    if (e.pointerType !== "mouse" || reduce) return;
+    const r = el.getBoundingClientRect();
+    el.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * .22}px, ${(e.clientY - r.top - r.height / 2) * .3}px)`;
+  });
+  el.addEventListener("pointerleave", () => { el.style.transform = ""; });
+});
+
+/* live activity feed under the hero figure */
+const FEED = [["New lead captured", "Facebook ad · Med spa"], ["Consult booked", "Sat · 10:00 AM"], ["Missed call → texted back", "in 8 seconds"], ["New Google review", "★★★★★ · replied by AI"], ["Lead qualified by AI", "After hours · HVAC"], ["Follow-up sent", "Day 3 estimate chase · Roofing"]];
+let feedI = 0;
+if (!reduce) setInterval(() => {
+  const b = $("#feed-body"); b.classList.add("swap");
+  setTimeout(() => { feedI = (feedI + 1) % FEED.length; $("#feed-t").textContent = FEED[feedI][0]; $("#feed-s").textContent = FEED[feedI][1]; b.classList.remove("swap"); }, 350);
+}, 3000);
+
+/* cursor ring */
+const pointer = { x: -9999, y: -9999, on: false };
+const cur1 = $("#cursor"), cur2 = $("#cursor-dot");
+let ringX = -9999, ringY = -9999;
+addEventListener("pointermove", e => {
+  pointer.x = e.clientX; pointer.y = e.clientY; pointer.on = e.pointerType === "mouse";
+  cur1.classList.toggle("on", pointer.on);
+  cur1.classList.toggle("hot", !!e.target.closest?.("a, button, label, summary, input, select, textarea"));
+  cur2.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+}, { passive: true });
+document.addEventListener("pointerleave", () => { pointer.x = pointer.y = -9999; cur1.classList.remove("on"); });
+(function ringLoop() {
+  ringX += (pointer.x - ringX) * (reduce ? 1 : .18); ringY += (pointer.y - ringY) * (reduce ? 1 : .18);
+  cur1.style.transform = `translate(${ringX}px, ${ringY}px)`;
+  requestAnimationFrame(ringLoop);
+})();
 
 /* ---------- menu / drawer ---------- */
 const menu = $("#menu"), burger = $("#burger"), drawer = $("#drawer"), veil = $("#veil"), dBody = $("#d-body"), formHome = $("#form-home");
@@ -838,8 +942,9 @@ cloud = (() => {
     gr.addColorStop(0, `rgba(${f[2]},1)`); gr.addColorStop(.18, `rgba(${f[2]},.95)`); gr.addColorStop(.42, `rgba(${f[2]},.22)`); gr.addColorStop(1, `rgba(${f[2]},0)`);
     g.fillStyle = gr; g.fillRect(0, 0, 32, 32); return s;
   });
-  const P = shapes[0].pts.map(p => ({ x: p[0], y: p[1], z: p[2], fx: p[0], fy: p[1], fz: p[2], t: 1, d: rnd() * .4, s: rnd() < .05 ? 1.8 + rnd() : .5 + rnd() * .7, ph: rnd() * 6.283 }));
-  let target = 0, prev = 0, start = 0, W, H, dpr, yaw = 0, last = performance.now(), zoomNow = 1;
+  const P = shapes[0].pts.map(p => ({ x: p[0], y: p[1], z: p[2], fx: p[0], fy: p[1], fz: p[2], ox: 0, oy: 0, vx: 0, vy: 0, px: 0, py: 0, t: 1, d: rnd() * .4, s: rnd() < .05 ? 1.8 + rnd() : .5 + rnd() * .7, ph: rnd() * 6.283 }));
+  let target = 0, prev = 0, start = 0, W, H, dpr, yaw = 0, last = performance.now(), zoomNow = 1, parX = 0, parY = 0;
+  const feed = $("#feed");
   const fig = $("#fig");
   function resize() {
     dpr = Math.min(devicePixelRatio || 1, 2); W = innerWidth; H = innerHeight;
@@ -867,11 +972,18 @@ cloud = (() => {
     const zoom = reduce ? 1 : sh.stars ? 1 + p * 1.6 : 1 + Math.pow(smooth(.25, 1, p), 2.2) * 7;
     const fade = sh.stars ? 1 : 1 - smooth(.72, 1, p) * .9;
     zoomNow = zoom;
-    fig.style.opacity = sh.stars ? 0 : String(clamp(1 - p * 3));
-    if (!narrow) { fig.style.left = ccx + "px"; fig.style.top = (ccy + sc * 1.25 + 14) + "px"; }
+    const capOn = sh.stars ? 0 : clamp(1 - p * 3), heroFeed = target === 0 && !narrow;
+    fig.style.opacity = heroFeed ? 0 : String(capOn);
+    feed.style.opacity = heroFeed ? String(capOn) : 0;
+    if (!narrow) { fig.style.left = feed.style.left = ccx + "px"; fig.style.top = (ccy + sc * 1.25 + 14) + "px"; feed.style.top = (ccy + sc * 1.25 + 4) + "px"; }
+    // figure leans toward the pointer
+    const hasP = pointer.x > -9000 && !reduce;
+    parX += ((hasP ? pointer.x / W - .5 : 0) - parX) * Math.min(1, dt * 3);
+    parY += ((hasP ? pointer.y / H - .5 : 0) - parY) * Math.min(1, dt * 3);
     if (sh.sway) yaw += ((reduce ? 0 : Math.sin(T * .45) * .32) - yaw) * Math.min(1, dt * 1.6);
     else yaw += reduce ? 0 : dt * (sh.spin || .1);
-    const tilt = sh.sway ? 0 : .3, cr = Math.cos(yaw), sr = Math.sin(yaw), ct = Math.cos(tilt), st = Math.sin(tilt);
+    const yw = yaw + parX * .6, tilt = (sh.sway ? 0 : .3) + parY * .35, cr = Math.cos(yw), sr = Math.sin(yw), ct = Math.cos(tilt), st = Math.sin(tilt);
+    const R = narrow ? 70 : 110, R2 = R * R, mx = pointer.x, my = pointer.y;
     const dim = dimK * fade, base = narrow ? 5.5 : 6.5;
     for (let i = 0; i < P.length; i++) {
       const pt = P[i], q = sh.pts[i];
@@ -885,7 +997,15 @@ cloud = (() => {
       const x1 = x0 * cr - z0 * sr, z1 = x0 * sr + z0 * cr;
       const y2 = y0 * ct - z1 * st, z2 = y0 * st + z1 * ct;
       const f = 3 / (3 + z2), k = sc * f * zoom;
-      const sx = ccx + x1 * k, sy = ccy - y2 * k;
+      let sx = ccx + x1 * k, sy = ccy - y2 * k;
+      if (!reduce) {
+        // particles part around the pointer, then spring home
+        const dx = sx + pt.ox - mx, dy = sy + pt.oy - my, d2 = dx * dx + dy * dy;
+        if (d2 < R2 && d2 > 1) { const d = Math.sqrt(d2), f2 = (1 - d / R) * 2.4; pt.vx += dx / d * f2; pt.vy += dy / d * f2; }
+        pt.vx = (pt.vx - pt.ox * .05) * .86; pt.vy = (pt.vy - pt.oy * .05) * .86;
+        pt.ox += pt.vx; pt.oy += pt.vy; sx += pt.ox; sy += pt.oy;
+      }
+      pt.px = sx; pt.py = sy;
       if (sx < -20 || sx > W + 20 || sy < -20 || sy > H + 20) continue;
       const size = pt.s * f * base * Math.min(2.4, Math.sqrt(zoom)) * (sh.stars ? .7 : 1);
       const tw = sh.stars ? .55 + .45 * Math.sin(T * 1.6 + pt.ph * 3) : 1;
@@ -897,6 +1017,11 @@ cloud = (() => {
   }
   resize();
   if (!reduce) requestAnimationFrame(draw);
+  // a click on open space sends a ripple through the figure
+  addEventListener("pointerdown", e => {
+    if (reduce || e.target.closest("a, button, input, select, textarea, label, summary, .drawer, .menu, .top")) return;
+    P.forEach(pt => { const dx = pt.px - e.clientX, dy = pt.py - e.clientY, d = Math.hypot(dx, dy) + 1, f = Math.min(14, 2600 / (d + 80)); pt.vx += dx / d * f; pt.vy += dy / d * f; });
+  });
   return { morph(i) {
     prev = target; target = i; start = performance.now();
     const z = zoomNow; // particles leave from where the viewer last saw them
