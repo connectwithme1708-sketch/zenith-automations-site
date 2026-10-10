@@ -308,7 +308,12 @@ h2 .serif { font: italic 400 1.1em/1 var(--serif); color: var(--aqua); letter-sp
 .mail b { user-select: all; color: var(--ink); font-weight: 500; }
 .copy { border: 1px solid var(--hair); background: none; border-radius: 99px; padding: 6px 12px; cursor: pointer; font-size: .74rem; color: var(--soft); }
 footer { border-top: 1px solid var(--hair); padding-block: 26px; font-size: .8rem; color: var(--faint); }
-footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+footer .wrap { display: flex; justify-content: space-between; align-items: center; gap: 12px 24px; flex-wrap: wrap; }
+.legal-links { display: flex; flex-wrap: wrap; gap: 8px 22px; }
+.legal-links a { color: var(--soft); text-decoration: none; border-bottom: 1px solid var(--hair); transition: color .2s, border-color .2s; }
+.legal-links a:hover { color: var(--aqua); border-color: var(--aqua); }
+.legal-links span { user-select: all; }
+footer .fine { width: 100%; font-size: .72rem; }
 
 /* ---------- multi-page shell ---------- */
 [hidden] { display: none !important; }
@@ -895,7 +900,11 @@ input[type="range"] { width: 100%; accent-color: var(--aqua); }
 </div>
 
 <button class="btn primary mcta" data-form>Book a build <span class="arr">→</span></button>
-<footer><div class="wrap"><span>© Zenith Automations · Done-for-you automation, AI agents and growth</span><span>Independent consultancy · not affiliated with HighLevel Inc.</span></div></footer>
+<footer><div class="wrap">
+  <span>© <span id="yr">2026</span> Zenith Automations · Done-for-you automation, AI agents and growth</span>
+  <nav class="legal-links" aria-label="Legal"><a href="https://zenith-automations.com/privacy">Privacy Policy</a><a href="https://zenith-automations.com/terms">Terms &amp; Conditions</a><span>anna@zenith-automations.com</span></nav>
+  <span class="fine">Independent consultancy · not affiliated with HighLevel Inc.</span>
+</div></footer>
 
 <script>
 (() => {
@@ -1408,7 +1417,7 @@ $("#faq").innerHTML = [
 const PAGES = [...document.querySelectorAll(".page")];
 const NAVP = [["services", "Services"], ["ai-agents", "AI Agents"], ["automation", "Automation"], ["marketing", "Marketing"], ["memberships", "Memberships"], ["industries", "Industries"], ["work", "Our Work"], ["process", "Process"]];
 $("#links").innerHTML = NAVP.map(p => `<a href="#${p[0]}">${p[1]}</a>`).join("");
-$("#mnav").innerHTML = `<a href="#home">Home <small>00</small></a>` + NAVP.map((p, i) => `<a href="#${p[0]}">${p[1]} <small>${String(i + 1).padStart(2, "0")}</small></a>`).join("") + `<div style="padding-top:22px"><button class="btn primary" data-form>Book a build <span class="arr">→</span></button></div>`;
+$("#mnav").innerHTML = `<a href="#home">Home <small>00</small></a>` + NAVP.map((p, i) => `<a href="#${p[0]}">${p[1]} <small>${String(i + 1).padStart(2, "0")}</small></a>`).join("") + `<div style="padding-top:22px"><button class="btn primary" data-form>Book a build <span class="arr">→</span></button></div><div class="legal-links" style="padding-top:22px;font-size:.85rem"><a href="https://zenith-automations.com/privacy">Privacy Policy</a><a href="https://zenith-automations.com/terms">Terms &amp; Conditions</a></div>`;
 const burger = $("#burger"), mnav = $("#mnav");
 const setMenu = open => { mnav.hidden = !open; burger.setAttribute("aria-expanded", open); burger.setAttribute("aria-label", open ? "Close menu" : "Open menu"); };
 burger.onclick = () => setMenu(mnav.hidden);
@@ -1510,6 +1519,7 @@ $("#nextBtn").onclick = async () => {
   $("#fdone").classList.add("active");
 };
 
+$("#yr").textContent = new Date().getFullYear();
 /* copy email */
 $("#copy").onclick = async e => {
   try { await navigator.clipboard.writeText($("#addr").textContent); e.target.textContent = "Copied"; }
