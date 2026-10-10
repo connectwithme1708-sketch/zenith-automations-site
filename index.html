@@ -39,7 +39,8 @@
 }
 * { box-sizing: border-box; }
 html { background: var(--night); scroll-behavior: smooth; }
-body { margin: 0; background: var(--night); color: var(--ink); font: 400 16px/1.6 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+html, body { overflow-x: hidden; overflow-x: clip; }
+body { margin: 0; background: var(--night); color: var(--ink); font: 400 16px/1.6 var(--sans); -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent; }
 a { color: inherit; }
 button { font: inherit; color: inherit; }
 :focus-visible { outline: 2px solid var(--aqua); outline-offset: 3px; }
@@ -81,10 +82,11 @@ header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 40; back
 @keyframes ping { 70% { box-shadow: 0 0 0 10px rgba(22, 199, 154, 0); } 100% { box-shadow: 0 0 0 0 rgba(22, 199, 154, 0); } }
 h1 { margin: 22px 0 0; font: 800 clamp(2.6rem, 6vw, 5.4rem)/.98 var(--sans); letter-spacing: -.045em; text-wrap: balance; }
 h1 .serif { font: italic 400 1.08em/1 var(--serif); letter-spacing: -.01em; }
-.rot { display: inline-grid; vertical-align: bottom; height: 1.06em; overflow: hidden; }
-.rot span { grid-area: 1 / 1; display: block; background: linear-gradient(100deg, var(--aqua), var(--teal) 40%, var(--blue)); -webkit-background-clip: text; background-clip: text; color: transparent; font: italic 400 1.1em/1 var(--serif); padding-right: .08em; transform: translateY(105%); transition: transform .7s cubic-bezier(.2, .9, .2, 1); }
+.rot { display: grid; justify-items: start; height: 1.24em; overflow: hidden; }
+.rot span { grid-area: 1 / 1; display: block; background: linear-gradient(100deg, var(--aqua), var(--teal) 40%, var(--blue)); -webkit-background-clip: text; background-clip: text; color: transparent; font: italic 400 1.1em/1.12 var(--serif); white-space: nowrap; padding: 0 .08em .06em 0; transform: translateY(110%); transition: transform .7s cubic-bezier(.2, .9, .2, 1); }
+.rot span.reset { transition: none; }
 .rot span.on { transform: none; }
-.rot span.out { transform: translateY(-105%); }
+.rot span.out { transform: translateY(-110%); }
 .lede { margin: 22px 0 0; font-size: 1.1rem; color: var(--soft); max-width: 36rem; }
 .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
 .stats { display: flex; flex-wrap: wrap; gap: 26px; margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--hair); }
@@ -498,6 +500,11 @@ input[type="range"] { width: 100%; accent-color: var(--aqua); }
   .grid3 { grid-template-columns: minmax(0, 1fr); }
   .recipe { grid-template-columns: minmax(0, 1fr); gap: 10px; }
 }
+.mcta { display: none; }
+@media (max-width: 620px) {
+  .mcta { display: flex; position: fixed; z-index: 45; left: 16px; right: 16px; bottom: calc(env(safe-area-inset-bottom, 0px) + 14px); justify-content: center; padding: 15px 22px; font-size: .95rem; }
+  footer { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 90px); }
+}
 @media (max-width: 620px) {
   .grid4, .g2 { grid-template-columns: minmax(0, 1fr); }
   .nav-r .btn { display: none; }
@@ -887,6 +894,7 @@ input[type="range"] { width: 100%; accent-color: var(--aqua); }
   </div>
 </div>
 
+<button class="btn primary mcta" data-form>Book a build <span class="arr">→</span></button>
 <footer><div class="wrap"><span>© Zenith Automations · Done-for-you automation, AI agents and growth</span><span>Independent consultancy · not affiliated with HighLevel Inc.</span></div></footer>
 
 <script>
@@ -926,9 +934,18 @@ addEventListener("pointermove", e => { spot.style.setProperty("--mx", e.clientX 
 const rot = [...$("#rot").children]; let ri = 0;
 if (!reduce) setInterval(() => {
   const a = rot[ri]; a.classList.remove("on"); a.classList.add("out");
-  setTimeout(() => a.classList.remove("out"), 750);
+  // park the word below the line instantly, so it never sweeps back through view
+  setTimeout(() => { a.classList.add("reset"); a.classList.remove("out"); void a.offsetHeight; a.classList.remove("reset"); }, 750);
   ri = (ri + 1) % rot.length; rot[ri].classList.add("on");
 }, 2400);
+
+/* every phrase fits on one line at any screen width */
+function fitRot() {
+  const box = $("#rot"); box.style.fontSize = "";
+  const avail = box.parentElement.clientWidth, widest = Math.max(...rot.map(s => s.offsetWidth));
+  if (widest > avail) box.style.fontSize = (avail / widest).toFixed(3) + "em";
+}
+fitRot(); addEventListener("resize", fitRot); document.fonts?.ready.then(fitRot);
 
 /* count-ups */
 document.querySelectorAll("[data-count]").forEach(el => {
