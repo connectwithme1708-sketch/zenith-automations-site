@@ -306,6 +306,8 @@ h2 .serif { font: italic 400 1.1em/1 var(--serif); color: var(--aqua); letter-sp
 .finale .cta-row { justify-content: center; }
 .mail { display: inline-flex; align-items: center; gap: 10px; margin-top: 22px; font: 500 .9rem/1 var(--mono); color: var(--soft); }
 .mail b { user-select: all; color: var(--ink); font-weight: 500; }
+.link-btn { background: none; border: 0; padding: 0; cursor: pointer; color: var(--aqua); font: 600 .95rem/1.4 var(--sans); text-align: left; }
+.link-btn:hover { text-decoration: underline; }
 .copy { border: 1px solid var(--hair); background: none; border-radius: 99px; padding: 6px 12px; cursor: pointer; font-size: .74rem; color: var(--soft); }
 footer { border-top: 1px solid var(--hair); padding-block: 26px; font-size: .8rem; color: var(--faint); }
 footer .wrap { display: flex; justify-content: space-between; align-items: center; gap: 12px 24px; flex-wrap: wrap; }
@@ -497,14 +499,32 @@ input[type="range"] { width: 100%; accent-color: var(--aqua); }
 .fdone .big { width: 74px; height: 74px; margin: 0 auto 16px; border-radius: 50%; display: grid; place-items: center; background: rgba(22, 199, 154, .18); color: var(--aqua); font-size: 2rem; animation: pop .6s cubic-bezier(.2, 1.4, .4, 1); }
 .fdone p { color: var(--soft); }
 
-@media (max-width: 1120px) { .links { display: none; } .burger { display: grid; } }
+.links { gap: 22px; font-size: .86rem; white-space: nowrap; }
+.btn { white-space: nowrap; }
+@media (max-width: 1260px) { .links { display: none; } .burger { display: grid; } }
 @media (max-width: 960px) {
+  .cgrid { grid-template-columns: minmax(0, 1fr); }
   .srow, .ai-hero, .mk, .case { grid-template-columns: minmax(0, 1fr); }
   .srow:nth-child(even) .viz, .mk.flip > :first-child { order: 0; }
   .grid4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .grid3 { grid-template-columns: minmax(0, 1fr); }
   .recipe { grid-template-columns: minmax(0, 1fr); gap: 10px; }
 }
+.contact-sec { position: relative; z-index: 1; padding-block: 20px clamp(60px, 8vw, 100px); scroll-margin-top: 80px; }
+.cgrid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: start; }
+.cinfo { list-style: none; margin: 28px 0 0; padding: 0; display: grid; }
+.cinfo li { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px; align-items: center; padding: 16px 0; border-top: 1px solid var(--hair); }
+.cinfo li:last-child { border-bottom: 1px solid var(--hair); }
+.cinfo .ti { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: rgba(126, 232, 210, .1); color: var(--aqua); }
+.cinfo .ti svg { width: 20px; height: 20px; }
+.cinfo small { display: block; font: 500 .62rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--faint); margin-bottom: 6px; }
+.cinfo b { font-weight: 600; }
+.cinfo .row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+#addr { user-select: all; }
+.qform { display: grid; gap: 14px; }
+.qform h3 { margin: 0; font-size: 1.25rem; }
+.qmsg { margin: 0; font-size: .9rem; min-height: 1.4em; color: var(--aqua); }
+.qmsg.err { color: #ffb4a8; }
 .mcta { display: none; }
 @media (max-width: 620px) {
   .mcta { display: flex; position: fixed; z-index: 45; left: 16px; right: 16px; bottom: calc(env(safe-area-inset-bottom, 0px) + 14px); justify-content: center; padding: 15px 22px; font-size: .95rem; }
@@ -829,10 +849,37 @@ input[type="range"] { width: 100%; accent-color: var(--aqua); }
       <h2>Ready to take your business to its <span class="serif">zenith?</span></h2>
       <p class="sub">Tell us what you need built or fixed. We reply within one business day with a clear, fixed-scope plan.</p>
       <div class="cta-row" style="margin-top:30px"><button class="btn primary" data-form>Start a project <span class="arr">→</span></button></div>
-      <div class="mail">Email <b id="addr">anna@zenith-automations.com</b> <button class="copy" id="copy">Copy</button></div>
     </div>
   </div>
 </main>
+
+<section class="contact-sec" id="contact">
+  <div class="wrap cgrid">
+    <div>
+      <span class="kicker">Contact</span>
+      <h2>Let's talk about your <span class="serif">business.</span></h2>
+      <p class="sub">Questions, quotes or a quick idea. Send us a message and a real person replies within one business day.</p>
+      <ul class="cinfo">
+        <li><span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><div><small>Email</small><div class="row"><b id="addr">anna@zenith-automations.com</b><button class="copy" id="copy">Copy</button></div></div></li>
+        <li><span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><div><small>Reply time</small><b>Within one business day</b></div></li>
+        <li><span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span><div><small>Ready to build?</small><button class="link-btn" data-form>Start a project with our 4-step brief →</button></div></li>
+      </ul>
+    </div>
+    <form class="canvas-card qform" id="qform" novalidate>
+      <h3>Send a quick message</h3>
+      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="g2">
+        <div class="ff"><label for="q-name">Name *</label><input id="q-name" autocomplete="name"></div>
+        <div class="ff"><label for="q-email">Email *</label><input id="q-email" type="email" autocomplete="email"></div>
+      </div>
+      <div class="ff"><label for="q-phone">Phone (optional)</label><input id="q-phone" type="tel" autocomplete="tel"></div>
+      <div class="ff"><label for="q-msg">Message *</label><textarea id="q-msg" placeholder="Tell us a little about your business and what you need."></textarea></div>
+      <p class="flegal">By sending, you agree to be contacted about your message. See our <a href="https://zenith-automations.com/privacy">Privacy Policy</a> and <a href="https://zenith-automations.com/terms">Terms</a>.</p>
+      <div><button type="submit" class="btn primary" id="q-send">Send message <span class="arr">→</span></button></div>
+      <p class="qmsg" id="q-status" role="status"></p>
+    </form>
+  </div>
+</section>
 
 <nav class="mnav" id="mnav" aria-label="Pages" hidden></nav>
 
@@ -1415,7 +1462,7 @@ $("#faq").innerHTML = [
 
 /* ---------- router: each nav item opens its own page ---------- */
 const PAGES = [...document.querySelectorAll(".page")];
-const NAVP = [["services", "Services"], ["ai-agents", "AI Agents"], ["automation", "Automation"], ["marketing", "Marketing"], ["memberships", "Memberships"], ["industries", "Industries"], ["work", "Our Work"], ["process", "Process"]];
+const NAVP = [["services", "Services"], ["ai-agents", "AI Agents"], ["automation", "Automation"], ["marketing", "Marketing"], ["memberships", "Memberships"], ["industries", "Industries"], ["work", "Our Work"], ["process", "Process"], ["contact", "Contact"]];
 $("#links").innerHTML = NAVP.map(p => `<a href="#${p[0]}">${p[1]}</a>`).join("");
 $("#mnav").innerHTML = `<a href="#home">Home <small>00</small></a>` + NAVP.map((p, i) => `<a href="#${p[0]}">${p[1]} <small>${String(i + 1).padStart(2, "0")}</small></a>`).join("") + `<div style="padding-top:22px"><button class="btn primary" data-form>Book a build <span class="arr">→</span></button></div><div class="legal-links" style="padding-top:22px;font-size:.85rem"><a href="https://zenith-automations.com/privacy">Privacy Policy</a><a href="https://zenith-automations.com/terms">Terms &amp; Conditions</a></div>`;
 const burger = $("#burger"), mnav = $("#mnav");
@@ -1425,7 +1472,7 @@ let curPage = null;
 function route() {
   const id = decodeURIComponent(location.hash.slice(1)) || "home";
   let page = PAGES.find(p => p.dataset.page === id), anchor = null;
-  if (!page) { anchor = document.getElementById(id); page = anchor?.closest(".page") || PAGES[0]; }
+  if (!page) { anchor = document.getElementById(id); page = anchor?.closest(".page") || curPage || PAGES[0]; }
   setMenu(false);
   if (page !== curPage) {
     PAGES.forEach(p => p.hidden = p !== page);
@@ -1439,6 +1486,8 @@ function route() {
   else scrollTo({ top: 0, behavior: "instant" });
 }
 addEventListener("hashchange", route);
+if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+if (performance.getEntriesByType?.("navigation")[0]?.type === "reload" && location.hash) history.replaceState(null, "", location.pathname + location.search);
 route();
 
 /* ---------- project form (same fields as the live Zenith form) ---------- */
@@ -1520,6 +1569,31 @@ $("#nextBtn").onclick = async () => {
 };
 
 $("#yr").textContent = new Date().getFullYear();
+/* quick contact form: lands in the same inbox and leads sheet */
+$("#qform").addEventListener("submit", async e => {
+  e.preventDefault();
+  const st = $("#q-status"), btn = $("#q-send"), q = id => $(id).value.trim();
+  st.classList.remove("err");
+  if (!q("#q-name")) { st.textContent = "Add your name so we know who to reply to."; st.classList.add("err"); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(q("#q-email"))) { st.textContent = "Enter a valid email so we can reply."; st.classList.add("err"); return; }
+  if (!q("#q-msg")) { st.textContent = "Write a short message first."; st.classList.add("err"); return; }
+  if (e.target._honey.value) return;
+  const p = { name: q("#q-name"), email: q("#q-email"), phone: q("#q-phone"), company: "", website: "", services: "General enquiry (contact form)", other_needs: "—", industry: "—", ghl_setup: "—", sub_accounts: "—", tools: "—", budget: "—", also_interested: "—", timeline: "—", details: q("#q-msg") };
+  btn.disabled = true; btn.textContent = "Sending…";
+  let ok = true;
+  if (!LIVE_SITE) { await sleep(800); ok = "preview"; }
+  else {
+    try {
+      const r = await fetch(FORM_ENDPOINT, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(p) });
+      const j = await r.json().catch(() => null);
+      if ((j && String(j.success) === "false") || (!j && r.status >= 500)) ok = false;
+    } catch (err) { ok = navigator.onLine !== false; }
+  }
+  btn.disabled = false; btn.innerHTML = 'Send message <span class="arr">→</span>';
+  if (ok === "preview") st.textContent = "Preview only, nothing was sent. On zenith-automations.com this goes straight to your inbox.";
+  else if (ok) { st.textContent = "Message sent. We'll reply within one business day."; e.target.reset(); }
+  else { st.textContent = "We couldn't send that. Please email anna@zenith-automations.com instead."; st.classList.add("err"); }
+});
 /* copy email */
 $("#copy").onclick = async e => {
   try { await navigator.clipboard.writeText($("#addr").textContent); e.target.textContent = "Copied"; }
