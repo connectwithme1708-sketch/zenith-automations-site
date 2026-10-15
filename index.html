@@ -555,6 +555,12 @@ input[type="range"] { width: 100%; accent-color: var(--aqua); }
   *, *::before, *::after { animation: none !important; transition: none !important; }
   .rot span.on { transform: none; }
 }
+/* phones & tablets: contact items stack (kept last so it wins over the desktop columns) */
+@media (max-width: 960px) {
+  .cinfo { grid-template-columns: minmax(0, 1fr); }
+  .cinfo li + li { border-top: 0; }
+  .link-btn { white-space: normal; }
+}
 </style>
 
 <div class="progress" id="progress"></div>
