@@ -584,6 +584,54 @@ input[type="range"] { width: 100%; accent-color: var(--aqua); }
 .wm small { color: #0B8F78; }
 .srow small, .tile small, .card small, .grid4 .tile small { color: color-mix(in srgb, var(--c, #0B8F78) 48%, #0B1D3F); }
 .w-head span, .w-head small { color: #7EE8D2; }
+
+/* light-pass-4 */
+.spot { background: radial-gradient(620px circle at var(--mx, 70%) var(--my, 20%), rgba(12, 141, 121, .14), transparent 62%); }
+.spot::before, .spot::after { content: ""; position: absolute; inset: 0; pointer-events: none; background-repeat: repeat; }
+.spot::before { background-image:
+    radial-gradient(circle at 7% 12%, rgba(12,141,121,.55) 0 2px, transparent 2.6px),
+    radial-gradient(circle at 19% 34%, rgba(47,107,255,.45) 0 1.6px, transparent 2.2px),
+    radial-gradient(circle at 31% 8%, rgba(106,92,255,.42) 0 1.8px, transparent 2.4px),
+    radial-gradient(circle at 43% 27%, rgba(12,141,121,.40) 0 1.4px, transparent 2.0px),
+    radial-gradient(circle at 56% 14%, rgba(232,85,156,.34) 0 1.8px, transparent 2.4px),
+    radial-gradient(circle at 68% 38%, rgba(47,107,255,.46) 0 1.5px, transparent 2.1px),
+    radial-gradient(circle at 79% 11%, rgba(181,116,0,.38) 0 1.7px, transparent 2.3px),
+    radial-gradient(circle at 91% 30%, rgba(12,141,121,.48) 0 2px, transparent 2.6px),
+    radial-gradient(circle at 14% 58%, rgba(106,92,255,.38) 0 1.6px, transparent 2.2px),
+    radial-gradient(circle at 27% 72%, rgba(47,107,255,.40) 0 1.9px, transparent 2.5px),
+    radial-gradient(circle at 39% 88%, rgba(12,141,121,.44) 0 1.5px, transparent 2.1px),
+    radial-gradient(circle at 52% 64%, rgba(232,85,156,.30) 0 1.7px, transparent 2.3px),
+    radial-gradient(circle at 64% 81%, rgba(47,107,255,.42) 0 1.5px, transparent 2.1px),
+    radial-gradient(circle at 77% 69%, rgba(106,92,255,.40) 0 1.8px, transparent 2.4px),
+    radial-gradient(circle at 88% 92%, rgba(12,141,121,.46) 0 1.6px, transparent 2.2px),
+    radial-gradient(circle at 4% 82%, rgba(181,116,0,.34) 0 1.5px, transparent 2.1px);
+  background-size: 760px 680px; animation: twinkleA 6s ease-in-out infinite, driftA 90s linear infinite; }
+.spot::after { background-image:
+    radial-gradient(circle at 11% 22%, rgba(47,107,255,.34) 0 1.3px, transparent 1.9px),
+    radial-gradient(circle at 24% 46%, rgba(12,141,121,.36) 0 1.5px, transparent 2.1px),
+    radial-gradient(circle at 36% 17%, rgba(232,85,156,.26) 0 1.4px, transparent 2.0px),
+    radial-gradient(circle at 49% 41%, rgba(106,92,255,.32) 0 1.2px, transparent 1.7999999999999998px),
+    radial-gradient(circle at 61% 24%, rgba(12,141,121,.34) 0 1.5px, transparent 2.1px),
+    radial-gradient(circle at 73% 49%, rgba(47,107,255,.30) 0 1.3px, transparent 1.9px),
+    radial-gradient(circle at 85% 19%, rgba(106,92,255,.28) 0 1.5px, transparent 2.1px),
+    radial-gradient(circle at 96% 44%, rgba(12,141,121,.32) 0 1.2px, transparent 1.7999999999999998px),
+    radial-gradient(circle at 8% 67%, rgba(232,85,156,.24) 0 1.4px, transparent 2.0px),
+    radial-gradient(circle at 21% 91%, rgba(47,107,255,.32) 0 1.3px, transparent 1.9px),
+    radial-gradient(circle at 34% 76%, rgba(12,141,121,.30) 0 1.5px, transparent 2.1px),
+    radial-gradient(circle at 47% 95%, rgba(181,116,0,.28) 0 1.3px, transparent 1.9px),
+    radial-gradient(circle at 59% 71%, rgba(106,92,255,.30) 0 1.4px, transparent 2.0px),
+    radial-gradient(circle at 71% 96%, rgba(12,141,121,.34) 0 1.2px, transparent 1.7999999999999998px),
+    radial-gradient(circle at 83% 74%, rgba(47,107,255,.28) 0 1.5px, transparent 2.1px),
+    radial-gradient(circle at 95% 88%, rgba(232,85,156,.24) 0 1.3px, transparent 1.9px);
+  background-size: 540px 500px; animation: twinkleB 8.5s ease-in-out infinite 1.2s, driftB 120s linear infinite; }
+@keyframes twinkleA { 0%, 100% { opacity: .95 } 50% { opacity: .35 } }
+@keyframes twinkleB { 0%, 100% { opacity: .40 } 50% { opacity: .95 } }
+@keyframes driftA { to { background-position: 760px -680px } }
+@keyframes driftB { to { background-position: -540px 500px } }
+.gridbg { opacity: .85; mask-image: radial-gradient(ellipse at 50% 0%, #000 0%, transparent 86%); -webkit-mask-image: radial-gradient(ellipse at 50% 0%, #000 0%, transparent 86%); }
+@media (prefers-reduced-motion: reduce) {
+  .spot::before, .spot::after { animation: none }
+}
 </style>
 
 <div class="progress" id="progress"></div>
