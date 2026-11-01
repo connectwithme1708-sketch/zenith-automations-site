@@ -135,7 +135,7 @@ h1 .serif { font: italic 400 1.08em/1 var(--serif); letter-spacing: -.01em; }
 section.blk { padding-block: clamp(70px, 10vw, 130px); }
 .kicker { display: inline-flex; align-items: center; gap: 10px; font: 500 .74rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--aqua); }
 .kicker::before { content: ""; width: 26px; height: 1px; background: var(--aqua); }
-h2 { margin: 16px 0 0; font: 800 clamp(2rem, 4.6vw, 3.8rem)/1.02 var(--sans); letter-spacing: -.04em; text-wrap: balance; max-width: 18ch; }
+h2 { margin: 16px 0 0; font: 800 clamp(1.7rem, 3.2vw, 2.75rem)/1.08 var(--sans); letter-spacing: -.04em; text-wrap: balance; max-width: 18ch; }
 h2 .serif { font: italic 400 1.1em/1 var(--serif); color: var(--aqua); letter-spacing: -.01em; }
 .sub { margin: 18px 0 0; color: var(--soft); max-width: 40rem; font-size: 1.05rem; }
 .sim { font: 500 .66rem/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--faint); display: inline-flex; gap: 8px; align-items: center; }
@@ -277,7 +277,7 @@ h2 .serif { font: italic 400 1.1em/1 var(--serif); color: var(--aqua); letter-sp
 
 /* pipeline */
 .pipe-top { margin-top: 40px; display: flex; justify-content: space-between; align-items: end; gap: 16px; flex-wrap: wrap; }
-.value b { display: block; font: 800 clamp(2rem, 4vw, 3rem)/1 var(--sans); letter-spacing: -.03em; font-variant-numeric: tabular-nums; background: linear-gradient(100deg, var(--aqua), var(--blue)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.value b { display: block; font: 800 clamp(1.6rem, 2.8vw, 2.3rem)/1.05 var(--sans); letter-spacing: -.03em; font-variant-numeric: tabular-nums; background: linear-gradient(100deg, var(--aqua), var(--blue)); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .value span { font-size: .8rem; color: var(--faint); }
 .pipe-scroll { margin-top: 18px; overflow-x: auto; padding-bottom: 6px; }
 .pipe { display: grid; grid-template-columns: repeat(5, minmax(190px, 1fr)); gap: 12px; min-width: 980px; }
@@ -310,7 +310,7 @@ h2 .serif { font: italic 400 1.1em/1 var(--serif); color: var(--aqua); letter-sp
 .blob.b { background: var(--blue); right: -10%; bottom: -40%; animation-delay: -5s; }
 .blob.c { background: var(--violet); left: 30%; top: 20%; width: 30%; animation-delay: -9s; opacity: .35; }
 @keyframes float { 50% { transform: translate(12%, 10%) scale(1.15); } }
-.finale h2 { margin: 16px auto 0; max-width: 16ch; font-size: clamp(2.4rem, 6.4vw, 5.6rem); }
+.finale h2 { margin: 16px auto 0; max-width: 16ch; font-size: clamp(1.8rem, 3.6vw, 3.1rem); }
 .finale .sub { margin-inline: auto; }
 .finale .cta-row { justify-content: center; }
 .mail { display: inline-flex; align-items: center; gap: 10px; margin-top: 22px; font: 500 .9rem/1 var(--mono); color: var(--soft); }
@@ -347,12 +347,12 @@ footer .fine { width: 100%; font-size: .72rem; }
 
 /* page heads */
 .phead { padding-block: clamp(56px, 8vw, 100px) 10px; position: relative; }
-.ph { margin: 18px 0 0; font: 800 clamp(2.6rem, 6.4vw, 5.6rem)/.98 var(--sans); letter-spacing: -.045em; max-width: 16ch; text-wrap: balance; }
+.ph { margin: 18px 0 0; font: 800 clamp(1.95rem, 4vw, 3.4rem)/1.04 var(--sans); letter-spacing: -.045em; max-width: 16ch; text-wrap: balance; }
 .ph .serif { font: italic 400 1.08em/1 var(--serif); letter-spacing: -.01em; background: linear-gradient(100deg, var(--aqua), var(--teal) 40%, var(--blue), var(--aqua)); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: sheen 6s linear infinite; }
 .crumbs { display: flex; gap: 8px; font: 500 .72rem/1 var(--mono); color: var(--faint); letter-spacing: .08em; }
 .crumbs a { text-decoration: none; color: var(--soft); }
 .pblk { padding-block: clamp(40px, 6vw, 80px); }
-.h3big { margin: 0; font: 800 clamp(1.6rem, 3vw, 2.4rem)/1.1 var(--sans); letter-spacing: -.03em; }
+.h3big { margin: 0; font: 800 clamp(1.4rem, 2.4vw, 2rem)/1.15 var(--sans); letter-spacing: -.03em; }
 
 /* services page */
 .srows { display: grid; gap: 22px; margin-top: 40px; }
