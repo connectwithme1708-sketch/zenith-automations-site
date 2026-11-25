@@ -632,6 +632,50 @@ input[type="range"] { width: 100%; accent-color: var(--aqua); }
 @media (prefers-reduced-motion: reduce) {
   .spot::before, .spot::after { animation: none }
 }
+
+/* ---------- premium media layer ---------- */
+.hero-shell { position: relative; overflow: hidden; isolation: isolate; background: #040915; --night: #040915; --deep: #081329; --panel: rgba(8, 19, 41, .72); --ink: #F2F6FC; --soft: rgba(242, 246, 252, .8); --faint: rgba(242, 246, 252, .52); --hair: rgba(242, 246, 252, .16); --aqua: #7EE8D2; --teal: #16C79A; color: var(--ink); color-scheme: dark; }
+.hero-media { position: absolute; inset: 0; z-index: -1; }
+.hero-shell .node { background: rgba(8, 19, 41, .88); color: #F2F6FC; border-color: rgba(242, 246, 252, .16); box-shadow: 0 10px 30px -12px rgba(0, 0, 0, .6); }
+.hero-shell .core { background: radial-gradient(circle, rgba(22, 199, 154, .28), rgba(8, 19, 41, .95) 70%); border-color: rgba(126, 232, 210, .45); }
+.hero-shell .core small { color: #7EE8D2; }
+.hero-media video, .hero-media img { width: 100%; height: 100%; object-fit: cover; opacity: .75; }
+.hero-media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(4, 9, 21, .94) 0%, rgba(4, 9, 21, .72) 42%, rgba(4, 9, 21, .25) 100%), linear-gradient(0deg, rgba(4, 9, 21, .9) 0%, transparent 28%); }
+.banner { position: relative; margin: 30px 0 0; border-radius: 26px; overflow: hidden; border: 1px solid var(--hair); aspect-ratio: 21 / 8; box-shadow: 0 40px 90px -40px rgba(0, 0, 0, .9); }
+.banner img { width: 100%; height: 100%; object-fit: cover; display: block; animation: kenburns 22s ease-in-out infinite alternate; }
+.banner::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(4, 9, 21, .55), transparent 45%); pointer-events: none; }
+@keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.08) translate(-1.5%, -1%); } }
+.who { padding-block: clamp(70px, 9vw, 120px) 0; }
+.who-grid { margin-top: 40px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.who-card { position: relative; display: block; text-decoration: none; border-radius: 22px; overflow: hidden; border: 1px solid var(--hair); background: var(--deep); box-shadow: 0 24px 60px -36px rgba(11, 29, 63, .35); transition: transform .4s, border-color .4s; }
+.who-card:hover { transform: translateY(-6px); border-color: rgba(126, 232, 210, .45); }
+.who-card .ph { aspect-ratio: 4 / 3; overflow: hidden; }
+.who-card img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1.2s cubic-bezier(.2, .9, .2, 1); }
+.who-card:hover img { transform: scale(1.07); }
+.who-card .cap { padding: 18px 20px 22px; display: grid; gap: 6px; }
+.who-card small { font: 500 .62rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--aqua); }
+.who-card b { font-size: 1.12rem; letter-spacing: -.01em; }
+.who-card span { color: var(--soft); font-size: .9rem; }
+.founder { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(28px, 5vw, 72px); align-items: center; }
+.f-photo { position: relative; justify-self: center; width: min(100%, 400px); aspect-ratio: 1; border-radius: 30px; padding: 3px; background: conic-gradient(from var(--ang, 0deg), var(--aqua), var(--blue), var(--violet), var(--teal), var(--aqua)); animation: ring-spin 8s linear infinite; box-shadow: 0 40px 100px -40px rgba(22, 199, 154, .6); }
+@property --ang { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+@keyframes ring-spin { to { --ang: 360deg; } }
+.f-photo img { width: 100%; height: 100%; object-fit: cover; border-radius: 27px; display: block; }
+.f-photo .badge { position: absolute; left: -14px; bottom: 26px; display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 14px; background: rgba(8, 19, 41, .92); color: #F2F6FC; border: 1px solid rgba(242, 246, 252, .16); font: 600 .78rem/1 var(--sans); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.founder p { color: var(--soft); font-size: 1.05rem; margin: 18px 0 0; max-width: 36rem; }
+.sign { margin-top: 22px; font: italic 400 1.6rem/1 var(--serif); color: var(--aqua); }
+.sign small { display: block; margin-top: 8px; font: 500 .7rem/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--faint); font-style: normal; }
+.finale { --night: #040915; --deep: #081329; --panel: rgba(8, 19, 41, .72); --ink: #F2F6FC; --soft: rgba(242, 246, 252, .8); --faint: rgba(242, 246, 252, .52); --hair: rgba(242, 246, 252, .16); --aqua: #7EE8D2; --teal: #16C79A; color: var(--ink); color-scheme: dark; background: #040915; }
+.finale-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -3; opacity: .7; }
+.finale::before { content: ""; position: absolute; inset: 0; z-index: -2; background: radial-gradient(ellipse at 50% 30%, rgba(4, 9, 21, .35), rgba(4, 9, 21, .85) 75%); }
+.finale .blob { opacity: .28; }
+@media (max-width: 960px) {
+  .who-grid { grid-template-columns: minmax(0, 1fr); }
+  .founder { grid-template-columns: minmax(0, 1fr); }
+  .banner { aspect-ratio: 16 / 10; }
+  .hero-media::after { background: linear-gradient(0deg, rgba(4, 9, 21, .92) 0%, rgba(4, 9, 21, .72) 45%, rgba(4, 9, 21, .55) 100%); }
+}
+@media (prefers-reduced-motion: reduce) { .banner img, .f-photo { animation: none !important; } }
 </style>
 
 <div class="progress" id="progress"></div>
@@ -660,6 +704,8 @@ input[type="range"] { width: 100%; accent-color: var(--aqua); }
 
 <main id="top">
 <div class="page" data-page="home">
+  <div class="hero-shell">
+  <div class="hero-media" aria-hidden="true"><video autoplay muted loop playsinline preload="auto" poster="media/hero.jpg"><source src="media/hero.mp4" type="video/mp4"></video></div>
   <div class="wrap hero">
     <div>
       <span class="chip"><span class="tag">AI</span> Done-for-you automation, AI and growth <span class="dot"></span></span>
@@ -679,9 +725,21 @@ input[type="range"] { width: 100%; accent-color: var(--aqua); }
     </div>
   </div>
 
+  </div>
+
   <div class="marquee" aria-hidden="true">
     <div class="track" id="mq1"></div>
   </div>
+
+  <section class="wrap who">
+    <span class="kicker">Built for real businesses</span>
+    <h2>From the front desk to the <span class="serif">back office.</span></h2>
+    <div class="who-grid">
+      <a class="who-card" href="#industries"><div class="ph"><img src="media/owner.jpg" alt="Clinic owner smiling while checking new bookings on a tablet at her front desk" loading="lazy"></div><div class="cap"><small>Clinics &amp; med spas</small><b>Every enquiry answered and booked</b><span>AI replies in seconds and fills the calendar, even after hours.</span></div></a>
+      <a class="who-card" href="#marketing"><div class="ph"><img src="media/storefront.jpg" alt="Modern local business storefront glowing at dusk" loading="lazy"></div><div class="cap"><small>Local businesses</small><b>Found on Google, chosen first</b><span>More reviews, a stronger profile and ads that feed straight into follow-up.</span></div></a>
+      <a class="who-card" href="#services"><div class="ph"><img src="media/strategy.jpg" alt="Team planning an automation workflow on a large screen" loading="lazy"></div><div class="cap"><small>Agencies &amp; growing teams</small><b>Systems your team can run</b><span>Complete builds, documented and handed over, or white-labelled for your clients.</span></div></a>
+    </div>
+  </section>
 
   <section class="blk" id="workflow">
     <div class="wrap">
@@ -753,6 +811,20 @@ input[type="range"] { width: 100%; accent-color: var(--aqua); }
     </div>
   </section>
 
+  <section class="blk" id="founder" style="padding-top:0">
+    <div class="wrap founder">
+      <div class="f-photo"><img src="media/anna.jpg" alt="Anna, founder of Zenith Automations" loading="lazy"><span class="badge"><span class="dot"></span> Founder-led builds</span></div>
+      <div>
+        <span class="kicker">Meet the founder</span>
+        <h2>Hi, I'm <span class="serif">Anna.</span></h2>
+        <p>I started Zenith Automations to give growing businesses the kind of systems big companies have: AI that answers every lead, automations that follow up on time, and marketing that connects straight to the calendar.</p>
+        <p>Every build is planned, tested and documented personally, so you always know what's running and why.</p>
+        <div class="sign">Anna<small>Founder, Zenith Automations</small></div>
+        <div class="cta-row"><button class="btn primary" data-form>Start a project <span class="arr">→</span></button><a class="btn" href="#contact">Get in touch</a></div>
+      </div>
+    </div>
+  </section>
+
   <section class="blk" id="home-process" style="padding-top:0">
     <div class="wrap">
       <span class="kicker">The ascent</span>
@@ -774,6 +846,7 @@ input[type="range"] { width: 100%; accent-color: var(--aqua); }
       <h1 class="ph">Everything we set up, run and <span class="serif">grow.</span></h1>
       <p class="sub">Ten services that cover the whole customer journey, from the first ad someone sees to the community they stay in. Pick one, or hand us all of it.</p>
     </section>
+    <div class="wrap"><figure class="banner" style="margin-top:0"><img src="media/strategy.jpg" alt="Team mapping out a client's automation plan" loading="lazy"></figure></div>
     <section class="wrap pblk" style="padding-top:0"><div class="srows" id="srows"></div></section>
   </div>
 
@@ -789,6 +862,7 @@ input[type="range"] { width: 100%; accent-color: var(--aqua); }
         <div class="orb-wrap"><canvas id="orb" aria-hidden="true"></canvas><div class="orb-say" id="orb-say">"Hi! How can I help you today?"</div><div class="orb-state" id="orb-state">● Listening</div></div>
       </div>
     </section>
+    <div class="wrap"><figure class="banner" style="margin-top:0"><img src="media/ai-phone.jpg" alt="Smartphone showing an AI chat conversation" loading="lazy"></figure></div>
     <section class="wrap pblk">
       <span class="kicker">Four agents, one brain</span>
       <div class="grid4" id="agents"></div>
@@ -817,6 +891,7 @@ input[type="range"] { width: 100%; accent-color: var(--aqua); }
       <p class="sub">We map how your customers actually buy, then turn it into workflows that send the right message at the right moment. Every branch is tested with real data before it goes live.</p>
       <div class="cta-row"><button class="btn primary" data-form data-svc="Workflows & automations">Automate my business <span class="arr">→</span></button><a class="btn" href="#workflow">Watch one run</a></div>
     </section>
+    <div class="wrap"><figure class="banner" style="margin-top:0"><img src="media/automation.jpg" alt="Glowing connected workflow nodes" loading="lazy"></figure></div>
     <section class="wrap pblk">
       <span class="kicker">Workflow recipes we build</span>
       <div class="recipes" id="recipes"></div>
@@ -834,6 +909,7 @@ input[type="range"] { width: 100%; accent-color: var(--aqua); }
       <h1 class="ph">Get found. Get followed. Get <span class="serif">booked.</span></h1>
       <p class="sub">Social media, ad campaigns and your Google Business Profile, run by the same team that builds your follow-up. Every lead from every channel lands in your CRM and gets an instant reply.</p>
     </section>
+    <div class="wrap"><figure class="banner" style="margin-top:0"><img src="media/marketing.jpg" alt="Marketing desk with social media and analytics" loading="lazy"></figure></div>
     <section class="wrap pblk" style="padding-top:20px">
       <div class="mk">
         <div class="canvas-card"><div class="wf-top"><b>Content calendar</b><span class="sim"><span class="dot"></span> Example month</span></div><div class="month" id="month"></div></div>
@@ -863,6 +939,7 @@ input[type="range"] { width: 100%; accent-color: var(--aqua); }
       <p class="sub">We set up and manage membership portals, online courses and communities, with onboarding, drip content and engagement automations that keep members coming back.</p>
       <div class="cta-row"><button class="btn primary" data-form data-svc="Memberships & communities">Launch my membership <span class="arr">→</span></button></div>
     </section>
+    <div class="wrap"><figure class="banner" style="margin-top:0"><img src="media/course.jpg" alt="Laptop playing an online course lesson" loading="lazy"></figure></div>
     <section class="wrap pblk">
       <div class="mk">
         <div class="canvas-card"><div class="wf-top"><b>Course progress</b><span class="sim"><span class="dot"></span> Example course</span></div><div class="mods" id="mods"></div></div>
@@ -881,6 +958,7 @@ input[type="range"] { width: 100%; accent-color: var(--aqua); }
       <h1 class="ph">Built for how your customers <span class="serif">buy.</span></h1>
       <p class="sub">A roofing lead and a med spa lead need different follow-up. Here are examples of what we build for each industry.</p>
     </section>
+    <div class="wrap"><figure class="banner" style="margin-top:0"><img src="media/owner.jpg" alt="Clinic owner checking bookings at the front desk" loading="lazy"></figure></div>
     <section class="wrap pblk" style="padding-top:0"><div class="ind" id="ind"></div></section>
   </div>
 
@@ -890,6 +968,7 @@ input[type="range"] { width: 100%; accent-color: var(--aqua); }
       <h1 class="ph">Real builds. Real <span class="serif">results.</span></h1>
       <p class="sub">Every project below was planned, built and automated end to end. Client names are kept private.</p>
     </section>
+    <div class="wrap"><figure class="banner" style="margin-top:0"><img src="media/storefront.jpg" alt="Client business storefront at dusk" loading="lazy"></figure></div>
     <section class="wrap pblk" style="padding-top:0"><div class="cases" id="cases"></div></section>
   </div>
 
@@ -899,6 +978,7 @@ input[type="range"] { width: 100%; accent-color: var(--aqua); }
       <h1 class="ph">From base camp to <span class="serif">zenith.</span></h1>
       <p class="sub">A clear plan, a fixed quote and a build tested with real data. Most projects go live in three to four weeks.</p>
     </section>
+    <div class="wrap"><figure class="banner" style="margin-top:0"><img src="media/summit.jpg" alt="Mountain summit above the clouds at dawn" loading="lazy"></figure></div>
     <section class="wrap pblk" style="padding-top:20px">
       <div class="ascent">
         <div class="rail"><b></b></div>
@@ -918,6 +998,7 @@ input[type="range"] { width: 100%; accent-color: var(--aqua); }
 
   <div class="wrap" id="start">
     <div class="finale">
+      <video class="finale-bg" autoplay muted loop playsinline preload="metadata" poster="media/summit.jpg" aria-hidden="true"><source src="media/summit.mp4" type="video/mp4"></video>
       <span class="blob a"></span><span class="blob b"></span><span class="blob c"></span>
       <span class="kicker">Your next peak</span>
       <h2>Ready to take your business to its <span class="serif">zenith?</span></h2>
@@ -1639,6 +1720,11 @@ $("#nextBtn").onclick = async () => {
 };
 
 $("#yr").textContent = new Date().getFullYear();
+/* background videos: pause off screen and for reduced motion */
+document.querySelectorAll("video").forEach(v => {
+  if (reduce) { v.removeAttribute("autoplay"); v.pause(); return; }
+  new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? v.play().catch(() => {}) : v.pause())).observe(v);
+});
 /* copy email */
 $("#copy").onclick = async e => {
   try { await navigator.clipboard.writeText($("#addr").textContent); e.target.textContent = "Copied"; }
